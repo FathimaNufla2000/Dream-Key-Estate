@@ -1,62 +1,64 @@
 import mongoose from "mongoose";
+import { type } from "os";
+
 
 const listingSchema = new mongoose.Schema(
     {
-        name:{
+        name: {
             type: String,
             required: true,
         },
-        description:{
+        description: {
             type: String,
-            required:true,
+            required: true,
         },
-        address:{
+        address: {
             type: String,
-            required:true,
+            required: true,
         },
-        regularPrice:{
+        regularPrice: {
             type: Number,
-            required:true,
+            required: true,
         },
-        discountPrice:{
+        discountPrice: {
             type: Number,
-            required:true,
+            required: true,
         },
-        bathrooms:{
+        bathrooms: {
             type: Number,
-            required:true,
+            required: true,
         },
-        bedrooms:{
+        bedrooms: {
             type: Number,
-            required:true,
+            required: true,
         },
-        furnished:{
-            type: Boolean,
-            required:true,
+        furnished: {
+            type: Boolean, // Use Boolean instead of BooleanConstructor
+            required: true,
         },
-        parking:{
-            type: Boolean,
-            required:true,
+        parking: {
+            type: Boolean, // Use Boolean instead of BooleanConstructor
+            required: true,
         },
-        type:{
+        type: {
             type: String,
-            required:true,
+            required: true,
         },
-        offer:{
+        offer: {
             type: Boolean,
-            required:true,
+            required: true,
         },
-        imageUrls:{
+        imageUrls: {
             type: Array,
-            required:true,
+            required: true,
         },
-        userRef:{
+        userRef: {
             type: String,
-            required:true,
+            required: true,
         },
-    }, 
-    {timestamps: true}
-)
+    },
+    { timestamps: true }
+);
 
 const Listing = mongoose.model('Listing', listingSchema);
 
