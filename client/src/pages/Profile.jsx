@@ -22,6 +22,8 @@ export default function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData,setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [showListingsError, setShowListingsError] = useState(false);
+  const [userListings, setUserListings]=useState([]);
   const dispatch = useDispatch();
 
   //firebase storage
@@ -118,8 +120,21 @@ const handleSignOut = async () => {
     dispatch(deleteUserSuccess(data));
   } catch (error) {
     dispatch(deleteUserFailure(data.message));
-  }
+  }};
 
+const handleShowListings = async () => {
+  try {
+    setShowListingsError(false);
+    const res = await fetch(`/api/user/listings/${currentUser._id}`);
+    const data = await res.json();
+    if(data.success === false){
+      setShowListingsError(true);
+      return;
+    }
+    setUserListings(data);
+  } catch (error) {
+    setShowListingsError(true);
+  }
 };
   return (
     <div className='p-3 max-w-lg mx-auto'>
@@ -132,8 +147,8 @@ const handleSignOut = async () => {
 
         <img onClick={()=>fileRef.current.click()}
         src={formData?.avatar || currentUser.avatar} alt='profile' 
-        className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2' 
-        />
+        className='border border-cyan-900 rounded-full h-24 w-24 
+        object-cover cursor-pointer self-center mt-2' />
 
         <p className='text-sm self-center'>
           {fileUploadError ? (
@@ -155,7 +170,7 @@ const handleSignOut = async () => {
         placeholder='username'
         defaultValue={currentUser.username} 
         id='username'
-        className='border bg-cyan-100 p-3 font-semibold rounded-lg' 
+        className='border border-cyan-500 bg-cyan-100 p-3 font-semibold rounded-lg' 
         onChange={handleChange}
         />
 
@@ -163,22 +178,23 @@ const handleSignOut = async () => {
         placeholder='email' 
         defaultValue={currentUser.email} 
         id='email'
-        className='border bg-cyan-100 p-3 font-semibold rounded-lg' 
+        className='border border-cyan-500 bg-cyan-100 p-3 font-semibold rounded-lg' 
         onChange={handleChange}
         />
 
         <input type='password' 
         placeholder='password' 
         id='password'
-        className='border bg-cyan-100 p-3 font-semibold rounded-lg' 
+        className='border border-cyan-500 bg-cyan-100 p-3 font-semibold rounded-lg' 
         onChange={handleChange}
        />  
         
-        <button disabled={loading} className='bg-cyan-900 text-white p-3 rounded-lg uppercase 
+        <button disabled={loading} 
+        className='border border-cyan-500 bg-cyan-900 text-white p-3 rounded-lg uppercase 
         hover:opacity-95 disabled:opacity-80 font-bold'>
           {loading ? 'Loading...' : 'Update'}
         </button>
-        <Link className='bg-green-700 text-white p-3 rounded-lg uppercase 
+        <Link className='border border-cyan-500 bg-green-800 text-white p-3 rounded-lg uppercase 
         hover:opacity-95 text-center disabled:opacity-80 font-bold' to = {"/create-listing"}>
           Create Listing
         </Link>
@@ -189,7 +205,36 @@ const handleSignOut = async () => {
       </div>
 
       <p className='text-red-700 mt-5 font-semibold' >{error ?error : ''} </p>
+
       <p className='text-green-700 mt-5 font-semibold'>{updateSuccess? 'User is updated successfully!': ''}</p>
+      <button onClick={handleShowListings}
+      className='text-green-700 font-bold w-full'>Show Listings</button>
+      <p className='text-red-700 font-bold mt-5'>{showListingsError ? 'Error showing listings' : ''}</p>
+      
+      {userListings && 
+      userListings.length > 0 && 
+      <div className="flex flex-col gap-4">
+        <h1 className='text-center my-7 text-2xl font-bold text-blue-900'>Your Listings </h1>
+        {userListings.map((listing) => (
+        <div key={listing._id} 
+        className='border border-green-500 bg-sky-100 
+        rounded-lg p-3 flex justify-between items-center gap-4'>
+
+          <Link to={`/listing/${listing._id}`}>
+            <img src={listing.imageUrls[0]} alt='listing cover'
+            className='h-16 w-16 object-contain'></img>
+          </Link>
+          <Link className='text-cyan-900 font-bold hover:underline truncate flex-1' to={`/listing/${listing._id}`}>
+            <p> {listing.name}</p>
+          </Link>
+            <div className='flex flex-col items-center'>
+              <button className='text-red-700 uppercase font-bold'>Delete</button>
+              <button className='text-green-700 uppercase font-bold'>Edit</button>
+            </div>
+          </div> 
+      ))}
       </div>
-  )
+      }
+      </div>
+  );
 }
