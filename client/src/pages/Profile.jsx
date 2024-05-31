@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useSelector} from 'react-redux';
 import { useRef, useState,useEffect } from 'react';
-import {getDownloadURL, getStorage, list, ref, uploadBytesResumable} from 'firebase/storage';
+import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage';
 import { app } from '../firebase';
 import { updateUserStart, 
           updateUserSuccess, 
@@ -245,8 +245,11 @@ const handleListingDelete = async (listingId) => {
             <p> {listing.name}</p>
           </Link>
             <div className='flex flex-col items-center'>
-              <button onClick={()=>handleListingDelete(listing._id)} className='text-red-700 uppercase font-bold'>Delete</button>
+              <button onClick={()=>handleListingDelete(listing._id)} 
+              className='text-red-700 uppercase font-bold'>Delete</button>
+              <Link to={`/update-listing/${listing._id}`}>
               <button className='text-green-700 uppercase font-bold'>Edit</button>
+              </Link>
             </div>
           </div> 
       ))}
