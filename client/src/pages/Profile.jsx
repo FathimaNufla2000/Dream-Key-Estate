@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useSelector} from 'react-redux';
 import { useRef, useState,useEffect } from 'react';
-import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage';
+import {getDownloadURL, getStorage, list, ref, uploadBytesResumable} from 'firebase/storage';
 import { app } from '../firebase';
 import { updateUserStart, 
           updateUserSuccess, 
@@ -136,6 +136,23 @@ const handleShowListings = async () => {
     setShowListingsError(true);
   }
 };
+
+const handleListingDelete = async (listingId) => {
+  try {
+    const res = await fetch(`/api/listing/delete/${listingId}`, {
+      method: 'DELETE',
+    });
+    const data = await res.json();
+    if(data.success === false){
+      console.log(data.message);
+      return;
+    }
+
+    setUserListings((prev) => prev.filter((listing) => listing._id !== listingId));
+  } catch (error) {
+    console.log(error.message);
+  }
+};
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl text-cyan-700 text-center font-bold 
@@ -228,7 +245,7 @@ const handleShowListings = async () => {
             <p> {listing.name}</p>
           </Link>
             <div className='flex flex-col items-center'>
-              <button className='text-red-700 uppercase font-bold'>Delete</button>
+              <button onClick={()=>handleListingDelete(listing._id)} className='text-red-700 uppercase font-bold'>Delete</button>
               <button className='text-green-700 uppercase font-bold'>Edit</button>
             </div>
           </div> 
