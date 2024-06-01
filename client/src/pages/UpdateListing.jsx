@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import {getDownloadURL, 
@@ -37,7 +35,8 @@ export default function CreateListing() {
   useEffect(() =>{ 
     const fetchListing = async() =>{
         const listingId = params.listingId;
-        const res = await fetch(`/api/listing/get/${listingId}`);
+        const res = await 
+        fetch(`/api/listing/get/${listingId}`);
         const data = await res.json();
         setFormData(data);
         if(data.success === false){
@@ -46,10 +45,12 @@ export default function CreateListing() {
         }
         };
     fetchListing();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleImageSubmit = (e) =>{
-    if(files.length > 0 && files.length + formData.imageUrls.length < 7 ){
+    if(files.length > 0 && files.length + 
+      formData.imageUrls.length < 7 ){
       setUploading(true);
       setImageUploadError(false);
       const promises = [];
@@ -57,8 +58,11 @@ export default function CreateListing() {
       for(let i = 0; i < files.length; i++){
         promises.push(storeImage(files[i]));
       }
-      Promise.all(promises).then((urls) => {
-        setFormData({ ...formData, imageUrls: formData.imageUrls.concat(urls),
+      Promise.all(promises)
+      .then((urls) => {
+        setFormData({ 
+          ...formData, 
+          imageUrls: formData.imageUrls.concat(urls),
         });
         setImageUploadError(false);
         setUploading(false);
@@ -136,8 +140,10 @@ export default function CreateListing() {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
-      if(formData.imageUrls.length < 1) return setError('You must upload at least one image');
-      if(+ formData.regularPrice < formData.discountPrice) return setError('Discount price lower than regular price');
+      if(formData.imageUrls.length < 1) 
+        return setError('You must upload at least one image');
+      if(+formData.regularPrice < +formData.discountPrice) 
+        return setError('Discount price lower than regular price');
       setLoading(true);
       setError(false);
       const res= await fetch(`/api/listing/update/${params.listingId}`,{
@@ -250,13 +256,15 @@ export default function CreateListing() {
           </div>
 
           <div className="flex items-center gap-2">
-            <input type='number' id='regularPrice' min='50' max='100000' required 
+            <input type='number' id='regularPrice' min='50' max='1000000' required 
             className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-cyan-900 font-bold'
             onChange={handleChange}
             value={formData.regularPrice}/>
             <div className='flex flex-col items-center'>
             <p className='text-cyan-900 font-bold'>Regular price</p>
-            <span className='text-cyan-700 font-bold text-xs'>($ / Month)</span>
+            {formData.type === 'rent' && (
+            <span className='text-cyan-700 font-bold text-xs'>($ / Month)</span>  
+           )}
             </div>
           </div>
 
@@ -268,10 +276,12 @@ export default function CreateListing() {
             value={formData.discountPrice}/>
             <div  className='flex flex-col items-center'>
             <p className='text-cyan-900 font-bold'>Discounted price</p>
-            <span className='text-cyan-700 font-bold text-xs'>($ / Month)</span>
-            </div>
+              {formData.type === 'rent' && (
+                  <span className='text-cyan-700 font-bold text-xs'>($ / Month)</span>
+              )}            
+              </div>
           </div>
-          )};
+          )}
     
         </div>
       </div>
@@ -295,7 +305,7 @@ export default function CreateListing() {
         <p className='text-red-700 text-sm font-semibold'>{imageUploadError && imageUploadError}</p>
         {
           formData.imageUrls.length > 0 && 
-          formData.imageUrls.map ((url, index) => (
+          formData.imageUrls.map((url, index) => (
             <div 
             key = {url}
             className="flex justify-between p-3 border border-cyan-500 items-center">
