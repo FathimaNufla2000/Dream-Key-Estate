@@ -25,7 +25,7 @@ export default function Listing() {
     const [copied, setCopied] = useState(false);
     const [contact, setContact] = useState(false);
     const params = useParams();
-    const {currentUser} = useSelector((state) => state.user);
+    const { currentUser } = useSelector((state) => state.user);
     useEffect(()=>{
         const fetchListing = async () => {
             try {   
@@ -51,7 +51,7 @@ export default function Listing() {
     }, [params.listingId]);
 
   return (
-    <main>
+    <main className='font-serif'>
         {loading && <p className='text-center my-7 text-2xl font-bold
          text-green-700'>Loading...</p>}
         {error && (
@@ -89,12 +89,12 @@ export default function Listing() {
             />
           </div>
           {copied && (
-            <p className='fixed top-[23%] right-[5%] z-10 rounded-md bg-slate-300 p-2 font-serif text-red-700 font-bold'>
+            <p className='fixed top-[23%] right-[5%] z-10 rounded-md bg-slate-300 p-2 text-red-700 font-bold'>
               Link copied!
             </p>
           )}
           <div className='flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4'>
-            <p className='text-2xl font-bold font-serif text-cyan-900'>
+            <p className='text-2xl font-bold text-cyan-900'>
               {listing.name} - ${' '}
               {listing.offer
                 ? listing.discountPrice.toLocaleString('en-US')
@@ -106,17 +106,17 @@ export default function Listing() {
               {listing.address}
             </p>
             <div className='flex gap-4'>
-              <p className='bg-red-900 w-full max-w-[200px] text-white text-center font-mono p-1 rounded-md'>
+              <p className='bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
                 {listing.type === 'rent' ? 'For Rent' : 'For Sale'}
               </p>
               {listing.offer && (
-                <p className='bg-green-900 w-full max-w-[200px] text-white text-center font-mono p-1 rounded-md'>
-                  ${+listing.regularPrice - +listing.discountPrice}
+                <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
+                  ${+listing.regularPrice - +listing.discountPrice} OFF
                 </p>
               )}
             </div>
-            <p className='text-blue-700 font-semibold font-serif'>
-              <span className='font-bold text-blue-950 font-serif'>Description - </span>
+            <p className='text-blue-700 font-semibold'>
+              <span className='font-bold text-blue-950'>Description - </span>
               {listing.description}
             </p>
             <ul className='text-green-800 font-bold text-sm flex flex-wrap items-center gap-4 sm:gap-6'>
@@ -142,10 +142,14 @@ export default function Listing() {
               </li>
             </ul>
             {currentUser && listing.userRef !== currentUser._id && !contact && (
-              <button onClick={()=>setContact(true)} className='bg-cyan-900 text-white p-3 rounded-lg uppercase 
-              hover:opacity-95 disabled:opacity-80 font-bold'>Contact Landlord</button>
+              <button 
+              onClick={()=>setContact(true)} 
+              className='bg-cyan-900 text-white p-3 rounded-lg uppercase 
+              hover:opacity-95 font-bold'>
+                Contact Landlord
+                </button>
             )} 
-            {contact && <Contact listing={listing}/>}
+            {contact && <Contact listing={listing} />}
           </div>
         </div>
       )}

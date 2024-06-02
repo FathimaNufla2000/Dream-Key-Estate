@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import {getDownloadURL, 
         getStorage, 
@@ -169,7 +168,7 @@ export default function CreateListing() {
     }
   };
   return (
-    <main className='p-3 max-w-4xl mx-auto'>
+    <main className='p-3 max-w-4xl mx-auto font-serif'>
       <h1 className='text-3xl text-cyan-700 text-center font-bold 
       my-7'>
       Update a Listing
@@ -179,7 +178,7 @@ export default function CreateListing() {
 
       <input type='text' 
         placeholder='Name' 
-        className='border border-cyan-500 bg-cyan-100 p-3 font-semibold rounded-lg' 
+        className='border border-cyan-500 bg-cyan-100 text-blue-800 p-3 font-semibold rounded-lg' 
         id='name'
         maxLength='62'
         minLength='10'
@@ -190,7 +189,7 @@ export default function CreateListing() {
 
       <textarea type='text' 
         placeholder='Description' 
-        className='border border-cyan-500 bg-cyan-100 p-3 font-semibold rounded-lg' 
+        className='border border-cyan-500 bg-cyan-100 text-blue-800 p-3 font-semibold rounded-lg' 
         id='description'
         required
         onChange={handleChange}
@@ -199,7 +198,7 @@ export default function CreateListing() {
 
       <input type='text' 
         placeholder='Address' 
-        className='border border-cyan-500 bg-cyan-100 p-3 font-semibold rounded-lg' 
+        className='border border-cyan-500 bg-cyan-100 text-blue-800 p-3 font-semibold rounded-lg' 
         id='address'
         required
         onChange={handleChange}
@@ -241,7 +240,7 @@ export default function CreateListing() {
         <div className="flex flex-wrap gap-6">
           <div className="flex items-center gap-2">
             <input type='number' id='bedrooms' min='1' max='10' required 
-            className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-cyan-900 font-bold'
+            className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-blue-800 font-bold'
             onChange={handleChange}
             value={formData.bedrooms}/>
             <p className='text-cyan-900 font-bold'>Beds</p>
@@ -249,7 +248,7 @@ export default function CreateListing() {
 
           <div className="flex items-center gap-2">
             <input type='number' id='bathrooms' min='1' max='10' required 
-            className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-cyan-900 font-bold'
+            className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-blue-800 font-bold'
             onChange={handleChange}
             value={formData.bathrooms}/>
             <p className='text-cyan-900 font-bold'>Baths</p>
@@ -257,7 +256,7 @@ export default function CreateListing() {
 
           <div className="flex items-center gap-2">
             <input type='number' id='regularPrice' min='50' max='1000000' required 
-            className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-cyan-900 font-bold'
+            className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-blue-800 font-bold'
             onChange={handleChange}
             value={formData.regularPrice}/>
             <div className='flex flex-col items-center'>
@@ -271,7 +270,7 @@ export default function CreateListing() {
           {formData.offer && (
             <div className="flex items-center gap-2">
             <input type='number' id='discountPrice' min='0' max='10000000' required 
-            className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-cyan-900 font-bold'
+            className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-blue-800 font-bold'
             onChange={handleChange}
             value={formData.discountPrice}/>
             <div  className='flex flex-col items-center'>
@@ -320,7 +319,7 @@ export default function CreateListing() {
           }
         <button disabled={loading || uploading} className='bg-cyan-900 text-white p-3 rounded-lg uppercase 
           hover:opacity-95 disabled:opacity-80 font-bold'>
-          {loading ? 'Creating...' : 'Update Listing'}</button>
+          {loading ? 'Updating...' : 'Update Listing'}</button>
           {error && <p className='text-red-700 text-sm'>{error}</p>}
       </div>
       </form>

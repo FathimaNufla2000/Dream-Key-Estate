@@ -1,6 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable react/jsx-key */
-/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import {getDownloadURL, 
         getStorage, 
@@ -153,7 +150,7 @@ export default function CreateListing() {
     }
   };
   return (
-    <main className='p-3 max-w-4xl mx-auto'>
+    <main className='p-3 max-w-4xl mx-auto font-serif'>
       <h1 className='text-3xl text-cyan-700 text-center font-bold 
       my-7'>
       Create a Listing
@@ -163,7 +160,7 @@ export default function CreateListing() {
 
       <input type='text' 
         placeholder='Name' 
-        className='border border-cyan-500 bg-cyan-100 p-3 font-semibold rounded-lg' 
+        className='border border-cyan-500 bg-cyan-100 text-blue-800 p-3 font-semibold rounded-lg' 
         id='name'
         maxLength='62'
         minLength='10'
@@ -174,7 +171,7 @@ export default function CreateListing() {
 
       <textarea type='text' 
         placeholder='Description' 
-        className='border border-cyan-500 bg-cyan-100 p-3 font-semibold rounded-lg' 
+        className='border border-cyan-500 bg-cyan-100 text-blue-800 p-3 font-semibold rounded-lg' 
         id='description'
         required
         onChange={handleChange}
@@ -183,7 +180,7 @@ export default function CreateListing() {
 
       <input type='text' 
         placeholder='Address' 
-        className='border border-cyan-500 bg-cyan-100 p-3 font-semibold rounded-lg' 
+        className='border border-cyan-500 bg-cyan-100 text-blue-800 p-3 font-semibold rounded-lg' 
         id='address'
         required
         onChange={handleChange}
@@ -247,7 +244,7 @@ export default function CreateListing() {
             min='1' 
             max='10' 
             required 
-            className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-cyan-900 font-bold'
+            className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-blue-800 font-bold'
             onChange={handleChange}
             value={formData.bedrooms}/>
             <p className='text-cyan-900 font-bold'>Beds</p>
@@ -260,7 +257,7 @@ export default function CreateListing() {
             min='1' 
             max='10' 
             required 
-            className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-cyan-900 font-bold'
+            className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-blue-800 font-bold'
             onChange={handleChange}
             value={formData.bathrooms}/>
             <p className='text-cyan-900 font-bold'>Baths</p>
@@ -273,7 +270,7 @@ export default function CreateListing() {
              min='50' 
              max='10000000' 
              required 
-            className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-cyan-900 font-bold'
+            className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-blue-800 font-bold'
             onChange={handleChange}
             value={formData.regularPrice}/>
             <div className='flex flex-col items-center'>
@@ -292,7 +289,7 @@ export default function CreateListing() {
             min='0' 
             max='10000000' 
             required 
-            className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-cyan-900 font-bold'
+            className='p-3 border border-cyan-500  bg-cyan-100 rounded-lg text-blue-800 font-bold'
             onChange={handleChange}
             value={formData.discountPrice}
             />

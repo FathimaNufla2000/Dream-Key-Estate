@@ -1,6 +1,6 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ListingItem from '../components/ListingItem';
 
 export default function Search() {
   const navigate = useNavigate();
@@ -117,7 +117,7 @@ export default function Search() {
               type='text'
               id='searchTerm'
               placeholder='Search...'
-              className='border border-cyan-500 rounded-lg p-3 w-full  bg-cyan-100'
+              className='border border-cyan-500 rounded-lg p-3 w-full text-blue-800 bg-cyan-100'
               value={sidebardata.searchTerm}
               onChange={handleChange}
             />
@@ -125,7 +125,7 @@ export default function Search() {
 
           <div className='flex gap-2 flex-wrap items-center'>
             <label className='font-bold text-cyan-900'>Type:</label>
-            <div className='flex gap-2  text-cyan-700 font-semibold'>
+            <div className='flex gap-2  text-blue-800 font-semibold'>
               <input 
               type='checkbox' 
               id='all' 
@@ -135,7 +135,7 @@ export default function Search() {
               <span>Rent & Sale</span>
             </div>
 
-            <div className='flex gap-2 text-cyan-700 font-semibold'>
+            <div className='flex gap-2 text-blue-800 font-semibold'>
               <input 
               type='checkbox' 
               id='rent' 
@@ -146,7 +146,7 @@ export default function Search() {
               <span>Rent</span>
             </div>
 
-            <div className='flex gap-2 text-cyan-700 font-semibold'>
+            <div className='flex gap-2 text-blue-800 font-semibold'>
               <input 
               type='checkbox' 
               id='sale' 
@@ -157,7 +157,7 @@ export default function Search() {
               <span>Sale</span>
             </div>
 
-            <div className='flex gap-2 text-cyan-700 font-semibold'>
+            <div className='flex gap-2 text-blue-800 font-semibold'>
               <input 
               type='checkbox' 
               id='offer' 
@@ -171,7 +171,7 @@ export default function Search() {
           
           <div className='flex gap-2 flex-wrap items-center'>
             <label className='font-bold text-cyan-900'>Amenities:</label>
-            <div className='flex gap-2 text-cyan-700 font-semibold'>
+            <div className='flex gap-2 text-blue-800 font-semibold'>
               <input 
               type='checkbox' 
               id='parking' 
@@ -182,7 +182,7 @@ export default function Search() {
               <span>Parking</span>
             </div>
 
-            <div className='flex gap-2 text-cyan-700 font-semibold'>
+            <div className='flex gap-2 text-blue-800 font-semibold'>
               <input 
               type='checkbox' 
               id='furnished' 
@@ -200,7 +200,7 @@ export default function Search() {
             onChange={handleChange}
             defaultValue={'created_at_desc'}
             id='sort_order' 
-            className='border border-cyan-500 bg-cyan-100 text-cyan-700 font-semibold rounded-lg p-3'>
+            className='border border-cyan-500 bg-cyan-100 text-blue-800 font-semibold rounded-lg p-3'>
               <option value='regularPrice_desc'>Price high to low</option>
               <option value='regularPrice_asc'>Price low to hight</option>
               <option value='createdAt_desc'>Latest</option>
@@ -213,10 +213,26 @@ export default function Search() {
           </button>
         </form>
       </div>
-      <div className=''>
+      <div className='flex-1'>
         <h1 className='text-3xl font-semibold border-b p-3 text-cyan-800 mt-5'>
           Listing results:
         </h1>
+        <div className='p-7 flex flex-wrap gap-4'>
+          {!loading && listings.length === 0 && (
+            <p className='text-xl text-red-700 font-bold'>No listing found!</p>
+          )}
+          {loading && (
+            <p className='text-xl text-green-700 text-center w-full font-bold'>
+              Loading...
+            </p>
+          )}
+
+          {!loading &&
+            listings &&
+            listings.map((listing) => (
+              <ListingItem key={listing._id} listing={listing} />
+            ))}
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable react-hooks/exhaustive-deps */
 import {useSelector} from 'react-redux';
 import { useRef, useState,useEffect } from 'react';
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage';
@@ -154,7 +152,7 @@ const handleListingDelete = async (listingId) => {
   }
 };
   return (
-    <div className='p-3 max-w-lg mx-auto'>
+    <div className='p-3 max-w-lg mx-auto font-serif'>
       <h1 className='text-3xl text-cyan-700 text-center font-bold 
       my-7'>Profile</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
@@ -187,7 +185,7 @@ const handleListingDelete = async (listingId) => {
         placeholder='username'
         defaultValue={currentUser.username} 
         id='username'
-        className='border border-cyan-500 bg-cyan-100 p-3 font-semibold rounded-lg' 
+        className='border border-cyan-500 bg-cyan-100 p-3 font-semibold rounded-lg text-blue-800' 
         onChange={handleChange}
         />
 
@@ -195,14 +193,14 @@ const handleListingDelete = async (listingId) => {
         placeholder='email' 
         defaultValue={currentUser.email} 
         id='email'
-        className='border border-cyan-500 bg-cyan-100 p-3 font-semibold rounded-lg' 
+        className='border border-cyan-500 bg-cyan-100 text-blue-800 p-3 font-semibold rounded-lg' 
         onChange={handleChange}
         />
 
         <input type='password' 
         placeholder='password' 
         id='password'
-        className='border border-cyan-500 bg-cyan-100 p-3 font-semibold rounded-lg' 
+        className='border border-cyan-500 bg-cyan-100 text-blue-800 p-3 font-semibold rounded-lg' 
         onChange={handleChange}
        />  
         

@@ -41,7 +41,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className='p-3 max-w-lg mx-auto'>
+    <div className='p-3 max-w-lg mx-auto font-serif'>
       <h1 className='text-3xl text-cyan-700 text-center font-bold 
       my-7'>Sign In</h1>
       <br></br>
@@ -49,18 +49,18 @@ export default function SignIn() {
       gap-4'>
         <input type='email' 
         placeholder='email' 
-        className='border bg-cyan-100 p-3 font-semibold rounded-lg' 
+        className='border border-cyan-500 bg-cyan-100 text-blue-800 p-3 font-semibold rounded-lg' 
         id='email' 
         onChange={handleChange} 
         />
         <input type='password' 
         placeholder='password' 
-        className='border bg-cyan-100 p-3 font-semibold rounded-lg' 
+        className='border border-cyan-500 bg-cyan-100 text-blue-800 p-3 font-semibold rounded-lg' 
         id='password' 
         onChange={handleChange} 
         />
         <button className='bg-cyan-900 text-white p-3 rounded-lg uppercase 
-        hover:opacity-95 disabled:opacity-80 font-bold'>
+        hover:opacity-95 disabled:opacity-80 font-bold border border-cyan-500'>
           {loading ? 'loading...': 'Sign In'} 
         </button>
         <OAuth />
@@ -72,7 +72,7 @@ export default function SignIn() {
           <span className='text-blue-700 font-bold'>Sign Up</span>
         </Link>
       </div>
-      {error && <p className='text-red-500 font-bold mt-5 font-mono '>{error}</p>}
+      {error && <p className='text-red-500 font-bold mt-5 '>{error}</p>}
       </div>
   );
 }
