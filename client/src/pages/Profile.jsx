@@ -1,7 +1,7 @@
 import {useSelector} from 'react-redux';
 import { useRef, useState,useEffect } from 'react';
-import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage';
-import { app } from '../firebase';
+//import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage';
+//import { app } from '../firebase';
 import { updateUserStart, 
           updateUserSuccess, 
           updateUserFailure, 
@@ -36,27 +36,59 @@ export default function Profile() {
     }
   }, [file]);
 
-  const handleFileUpload = (file) => {
-    const storage = getStorage(app);
-    const fileName = new Date().getTime() + file.name;
-    const storageRef = ref(storage, fileName);
-    const uploadTask =uploadBytesResumable(storageRef,file);
+  //const handleFileUpload = (file) => {
+  //  const storage = getStorage(app);
+  //  const fileName = new Date().getTime() + file.name;
+  //  const storageRef = ref(storage, fileName);
+  //  const uploadTask =uploadBytesResumable(storageRef,file);
+//
+  //  uploadTask.on('state_changed',
+  //    (snapshot) => {
+  //      const progress = (snapshot.bytesTransferred /
+  //        snapshot.totalBytes)*100;
+  //        setFilePerc(Math.round(progress));
+  //    },
+  //    // eslint-disable-next-line no-unused-vars
+  //    (error) => {
+  //        setFileUploadError(true);
+  //    },
+  //    ()=>{
+  //      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>
+  //        setFormData({...formData, avatar: downloadURL })
+  //    );
+  //    });
+  //};
 
-    uploadTask.on('state_changed',
-      (snapshot) => {
-        const progress = (snapshot.bytesTransferred /
-          snapshot.totalBytes)*100;
-          setFilePerc(Math.round(progress));
-      },
-      // eslint-disable-next-line no-unused-vars
-      (error) => {
-          setFileUploadError(true);
-      },
-      ()=>{
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>
-          setFormData({...formData, avatar: downloadURL })
+  const handleFileUpload = async (file) => {
+    setFileUploadError(false);
+    setFilePerc(10);
+    try {
+      const data = new FormData();
+      data.append('file', file);
+      data.append('upload_preset', 'dream_key_estate');
+      data.append('cloud_name', 'dsgmmmzs');
+
+      setFilePerc(50);
+
+      const res = await fetch(
+        'https://api.cloudinary.com/v1_1/dsgmmmzs/image/upload',
+        {
+          method: 'POST',
+          body: data,
+        }
       );
-      });
+      const result = await res.json();
+
+      if (!result.secure_url) {
+        throw new Error('Upload failed');
+      }
+
+      setFilePerc(100);
+      setFormData({ ...formData, avatar: result.secure_url });
+    } catch (error) {
+      setFileUploadError(true);
+      setFilePerc(0);
+    }
   };
 
 const handleChange = (e) => {
